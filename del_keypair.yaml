@@ -3,7 +3,6 @@
   connection: local
   gather_facts: no
   vars:
-    #your region
     region: us-east-1
   
   tasks:
@@ -12,6 +11,6 @@
   ec2_key:
     region: "{{ region }}"
     #your key pair name
-    name: yan-key-pair-apsydney
+    name: "{{ key_name }}"
     state: absent
   
