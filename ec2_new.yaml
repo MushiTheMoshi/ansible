@@ -1,0 +1,17 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    #your region
+    region: us-east-1
+  tasks:
+    - name: EC2 basic provisioning
+      ec2:
+        region: "{{ region }}"
+        key_name: "{{ key_name }}"
+        instance_type: t2.micro
+          mage: ami-b73b63a0
+          wait: yes
+          group: 
+  
+

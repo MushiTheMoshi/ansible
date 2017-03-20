@@ -1,0 +1,33 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    region: us-east-1
+
+  tasks:
+    - name: create security group
+      ec2_group:
+        region: "{{ region }}"
+        #your security group name
+        name: "{{ sgname  }}" 
+        description: multiple port config 
+        rules:
+          # allow ssh access from your ip address
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{ allowed_ip }}"
+            # allow http access from anywhere
+          - proto: tcp
+            from_port: "{{ item.p1 }}"
+            to_port: "{{ item.p2 }}"
+            cidr_ip: "{{ allowed_ip }}"
+
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+      with_items:
+        - p1: "{{p1}}"
+          p2: "{{p2}}"
+
